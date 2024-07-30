@@ -8,7 +8,7 @@ $filesToDownload = @(
     "Modules/ShrinkPartition.psm1",
     "Modules/DeletePartition.psm1",
     "Modules/ChangeDriveLetter.psm1",
-    "Modules/Banner.psm1",
+    "Modules/Banner.psm1"
 )
 
 # Define the local path to save the files
