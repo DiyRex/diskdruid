@@ -26,10 +26,11 @@ if (-Not (Test-Path -Path $destinationPath)) {
 foreach ($file in $filesToDownload) {
     # Construct the URL and output path
     $url = "$repoUrl/$file"
+    
+    # Determine output path and create necessary subdirectories
     $output = Join-Path -Path $destinationPath -ChildPath $file
-
-    # Create subdirectories if they don't exist
     $outputDir = Split-Path -Path $output -Parent
+    
     if (-Not (Test-Path -Path $outputDir)) {
         New-Item -Path $outputDir -ItemType Directory -Force
         Write-Output "Created directory: $outputDir"
