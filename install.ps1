@@ -1,5 +1,7 @@
 # Define the repository URL and files to download
 $repoUrl = "https://raw.githubusercontent.com/diyrex/diskdruid/main"
+
+# List of files to download
 $filesToDownload = @(
     "install.ps1",
     "DiskDruid.ps1",
@@ -22,14 +24,23 @@ if (-Not (Test-Path -Path $destinationPath)) {
 
 # Download each file
 foreach ($file in $filesToDownload) {
+    # Construct the URL and output path
     $url = "$repoUrl/$file"
-    $output = Join-Path -Path $destinationPath -ChildPath (Split-Path $file -Leaf)
-    
+    $output = Join-Path -Path $destinationPath -ChildPath $file
+
+    # Create subdirectories if they don't exist
+    $outputDir = Split-Path -Path $output -Parent
+    if (-Not (Test-Path -Path $outputDir)) {
+        New-Item -Path $outputDir -ItemType Directory -Force
+        Write-Output "Created directory: $outputDir"
+    }
+
+    # Download the file
     Write-Host "Downloading $url to $output"
     Invoke-WebRequest -Uri $url -OutFile $output -ErrorAction Stop
 }
 
-Write-Host "All files have been downloaded successfully."
+Write-Output "All files have been downloaded."
 
 # Add the script directory to the system PATH if it's not already there
 $path = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
