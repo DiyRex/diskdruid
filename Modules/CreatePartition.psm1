@@ -25,7 +25,7 @@ function Create-Partition {
         # Convert the free space to GB for easier input
         $freeSpaceGB = [math]::Round($freeSpace / 1GB, 2)
 
-        Write-Host "Available space on disk $DiskNumber: $freeSpaceGB GB"
+        Write-Host "Available space on disk $DiskNumber- $freeSpaceGB GB"
     } else {
         Write-Host "No partitions found on disk $DiskNumber."
     }
