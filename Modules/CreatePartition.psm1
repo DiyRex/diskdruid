@@ -11,22 +11,28 @@ function Create-Partition {
 
     # Calculate the used space by summing the sizes of all partitions
     try {
-        $partitions = Get-Partition -DiskNumber $DiskNumber
-        if($partitions){
-            $usedSpace = ($partitions | Measure-Object -Property Size -Sum).Sum
+    # Attempt to get partitions and calculate used space
+    $partitions = Get-Partition -DiskNumber $DiskNumber
 
-            # Calculate the free space
-            $freeSpace = $totalSize - $usedSpace
+    # Check if partitions were successfully retrieved
+    if ($partitions) {
+        $usedSpace = ($partitions | Measure-Object -Property Size -Sum).Sum
 
-            # Convert the free space to GB for easier input
-            $freeSpaceGBx = $freeSpace / 1GB
-            $freeSpaceGB = $freeSpaceGBx - 1
+        # Calculate the total and free space
+        $totalSize = (Get-Disk -Number $DiskNumber).Size
+        $freeSpace = $totalSize - $usedSpace
 
-            Write-Host "Available space on disk $DiskNumber- $freeSpaceGB GB"
-        }
-    }catch{
-        Write-Host "Empty Disk"
+        # Convert the free space to GB for easier input
+        $freeSpaceGB = [math]::Round($freeSpace / 1GB, 2)
+
+        Write-Host "Available space on disk $DiskNumber: $freeSpaceGB GB"
+    } else {
+        Write-Host "No partitions found on disk $DiskNumber."
     }
+} catch {
+    # Handle errors and display a custom message
+    Write-Host "An error occurred while retrieving partition information. Please ensure the disk number is correct."
+}
 
     # Prompt for partition size
     do {
