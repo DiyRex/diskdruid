@@ -3,7 +3,7 @@ $repoUrl = "https://raw.githubusercontent.com/diyrex/diskdruid/main"
 $filesToDownload = @(
     "install.ps1",
     "DiskDruid.ps1",
-    "Modules/Banner.psm1",
+    # "Modules/Banner.psm1",
     "Modules/CreatePartition.psm1",
     "Modules/ExtendPartition.psm1",
     "Modules/ShrinkPartition.psm1",
