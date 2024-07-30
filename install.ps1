@@ -1,5 +1,5 @@
 # Define the repository URL and files to download
-$repoUrl = "https://raw.githubusercontent.com/diyrex/ws-disk-manage-script/main"
+$repoUrl = "https://raw.githubusercontent.com/diyrex/diskdruid/main"
 $filesToDownload = @(
     "install.ps1",
     "DiskDruid.ps1",
