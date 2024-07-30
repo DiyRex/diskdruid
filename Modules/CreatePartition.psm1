@@ -10,7 +10,8 @@ function Create-Partition {
     $totalSize = $disk.Size
 
     # Calculate the used space by summing the sizes of all partitions
-    $partitions = Get-Partition -DiskNumber $DiskNumber
+    try {
+        $partitions = Get-Partition -DiskNumber $DiskNumber
     $usedSpace = ($partitions | Measure-Object -Property Size -Sum).Sum
 
     # Calculate the free space
@@ -21,6 +22,9 @@ function Create-Partition {
     $freeSpaceGB = $freeSpaceGBx - 1
 
     Write-Host "Available space on disk $DiskNumber- $freeSpaceGB GB"
+    }catch{
+        Write-Host "Empty Disk"
+    }
 
     # Prompt for partition size
     do {
